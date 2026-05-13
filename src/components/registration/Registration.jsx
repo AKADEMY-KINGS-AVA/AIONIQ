@@ -7,6 +7,7 @@ export default function Registration() {
     }
     const handleMouseEnter = () => {
         console.log('Mouse entered')
+        asd
     }
     return (
         <section className="Registration">
