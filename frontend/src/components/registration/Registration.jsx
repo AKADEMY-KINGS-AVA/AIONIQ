@@ -6,20 +6,23 @@ export default function Registration() {
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
 
-    const ADMIN_LOGIN = 'vados'
-    const ADMIN_PASSWORD = 'vados+7789878'
+    async function handleLogin() {
+        const response = await fetch('http://127.0.0.1:5000/send-login', {
+            method: 'POST',
 
-    function handleLogin() {
+            headers: {
+                'Content-Type': 'application/json'
+            },
 
-        if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+            body: JSON.stringify({
+                login: login,
+                password: password
+            })
+        })
 
-            console.log('Вы успешно вошли в систему!')
+        const data = await response.json()
 
-        } else {
-
-            console.log('Неверный логин или пароль.')
-
-        }
+        console.log(data.message)
     }
 
     function handleRegister() {
