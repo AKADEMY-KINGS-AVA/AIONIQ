@@ -4,19 +4,62 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+# временная база пользователей
+users = {}
 
-@app.route("/send-login", methods=["POST"])
-def send_login():
+
+@app.route("/register", methods=["POST"])
+def register():
+
     data = request.get_json()
 
     login = data.get("login")
     password = data.get("password")
 
-    print("Пользователь отправил логин:", login)
-    print("Пользователь отправил пароль:", password)
+    # проверка пустых полей
+    if not login or not password:
+        return jsonify({
+            "message": "Заполните все поля"
+        }), 400
+
+    # пользователь уже существует
+    if login in users:
+        return jsonify({
+            "message": "Пользователь уже существует"
+        }), 400
+
+    # сохраняем пользователя
+    users[login] = password
+
+    print(users)
 
     return jsonify({
-        "message": f"Сервер получил логин: {login}, пароль: {password}"
+        "message": "Регистрация успешна"
+    })
+
+
+@app.route("/login", methods=["POST"])
+def login():
+
+    data = request.get_json()
+
+    login = data.get("login")
+    password = data.get("password")
+
+    # проверка существования
+    if login not in users:
+        return jsonify({
+            "message": "Пользователь не найден"
+        }), 404
+
+    # проверка пароля
+    if users[login] != password:
+        return jsonify({
+            "message": "Неверный пароль"
+        }), 401
+
+    return jsonify({
+        "message": "Вход выполнен"
     })
 
 

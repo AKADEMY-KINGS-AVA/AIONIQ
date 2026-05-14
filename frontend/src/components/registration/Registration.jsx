@@ -3,32 +3,91 @@ import { useState } from 'react'
 
 export default function Registration() {
 
+    const [mode, setMode] = useState('login')
+
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
+    const [repeatPassword, setRepeatPassword] = useState('')
 
     async function handleLogin() {
-        const response = await fetch('http://127.0.0.1:5000/send-login', {
-            method: 'POST',
 
-            headers: {
-                'Content-Type': 'application/json'
-            },
+        try {
 
-            body: JSON.stringify({
-                login: login,
-                password: password
+            const response = await fetch('http://127.0.0.1:5000/login', {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    login,
+                    password
+                })
             })
-        })
 
-        const data = await response.json()
+            const data = await response.json()
 
-        console.log(data.message)
+            console.log(data.message)
+
+            if (response.ok) {
+
+                console.log('Успешный вход')
+
+                setLogin('')
+                setPassword('')
+                setRepeatPassword('')
+            }
+
+        } catch (error) {
+
+            console.log('Ошибка сервера:', error)
+
+        }
     }
 
-    function handleRegister() {
+    async function handleRegister() {
 
-        console.log('Переход к регистрации')
+        if (password !== repeatPassword) {
+            console.log('Пароли не совпадают')
+            return
+        }
 
+        try {
+
+            const response = await fetch('http://127.0.0.1:5000/register', {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    login,
+                    password
+                })
+            })
+
+            const data = await response.json()
+
+            console.log(data.message)
+
+            if (response.ok) {
+
+                console.log('Регистрация успешна')
+
+                setMode('login')
+
+                setLogin('')
+                setPassword('')
+                setRepeatPassword('')
+            }
+
+        } catch (error) {
+
+            console.log('Ошибка сервера:', error)
+
+        }
     }
 
     return (
@@ -64,23 +123,63 @@ export default function Registration() {
                     }}
                 />
 
+                {mode === 'register' && (
+                    <input
+                        className="Password-input"
+                        type="password"
+                        placeholder="Repeat password"
+
+                        value={repeatPassword}
+
+                        onChange={(event) => {
+                            setRepeatPassword(event.target.value)
+                        }}
+                    />
+                )}
+
                 <section className="Buttons-container">
 
-                    <button
-                        className="Login-button"
-                        type="button"
-                        onClick={handleLogin}
-                    >
-                        Вход
-                    </button>
+                    {mode === 'login' ? (
+                        <>
+                            <button
+                                className="Login-button"
+                                type="button"
+                                onClick={handleLogin}
+                            >
+                                Вход
+                            </button>
 
-                    <button
-                        className="Register-button"
-                        type="button"
-                        onClick={handleRegister}
-                    >
-                        Регистрация
-                    </button>
+                            <button
+                                className="Register-button"
+                                type="button"
+                                onClick={() => {
+                                    setMode('register')
+                                }}
+                            >
+                                Регистрация
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button
+                                className="Login-button"
+                                type="button"
+                                onClick={handleRegister}
+                            >
+                                Создать аккаунт
+                            </button>
+
+                            <button
+                                className="Register-button"
+                                type="button"
+                                onClick={() => {
+                                    setMode('login')
+                                }}
+                            >
+                                Назад
+                            </button>
+                        </>
+                    )}
 
                 </section>
 
