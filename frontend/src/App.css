@@ -5,17 +5,90 @@
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .App {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+    background-color: #131313;
+
+    overflow: hidden;
+}
+
+.Registration {
+    position: relative;
+    z-index: 10;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    margin: 0;
-    background-image: url("./assets/background.png");
+}
+
+.elips {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.asset_1 {
+
+    top: -35%;
+    left: 55%;
+
+
+    animation:
+        waveMove1 10s ease-in-out infinite alternate;
+
+    transform-origin: center;
+}
+
+
+/* ---------- ASSET 2 ---------- */
+
+.asset_2 {
+
+    top: 45%;
+    right: 55%;
+
+    animation:
+        waveMove2 10s ease-in-out infinite alternate;
+
+    transform-origin: center;
+}
+
+/* ---------- ANIMATIONS ---------- */
+
+@keyframes waveMove1 {
+
+    from {
+        transform:
+            rotate(-10deg) translateX(-0px) translateY(px) scale(1);
+    }
+
+    to {
+        transform:
+            rotate(70deg) translateX(20px) translateY(10px) scale(1.05);
+    }
+
+}
+
+@keyframes waveMove2 {
+
+    from {
+        transform:
+            rotate(15deg) translateX(0px) translateY(40px) scale(1);
+    }
+
+    to {
+        transform:
+            rotate(-60deg) translateX(70px) translateY(40px) scale(1.1);
+    }
+
 }
