@@ -31,8 +31,6 @@ def register():
     # сохраняем пользователя
     users[login] = password
 
-    print(users)
-
     return jsonify({
         "message": "Регистрация успешна"
     })
@@ -54,10 +52,10 @@ def login():
 
     # проверка пароля
     if users[login] != password:
+        print(f'Попытка входа {login}: Неверный пароль')
         return jsonify({
             "message": "Неверный пароль"
         }), 401
-
     return jsonify({
         "message": "Вход выполнен"
     })

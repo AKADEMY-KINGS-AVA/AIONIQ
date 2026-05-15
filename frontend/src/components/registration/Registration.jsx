@@ -1,7 +1,7 @@
 import './Registration.css'
 import { useState } from 'react'
 
-export default function Registration() {
+export default function Registration({ setIsAuth }) {
 
     const [mode, setMode] = useState('login')
 
@@ -33,11 +33,10 @@ export default function Registration() {
             if (response.ok) {
 
                 console.log('Успешный вход')
-
-                setLogin('')
-                setPassword('')
-                setRepeatPassword('')
             }
+            setLogin('')
+            setPassword('')
+            setRepeatPassword('')
 
         } catch (error) {
 
@@ -47,7 +46,48 @@ export default function Registration() {
     }
 
     async function handleRegister() {
+        if (login.length < 4 || login.length > 20) {
+            console.log('Логин должен быть от 4 до 20 символов')
+            return
+        }
 
+        if (password.length < 6) {
+            console.log('Пароль должен быть не менее 6 символов')
+            return
+        }
+        if (password.length > 20) {
+            console.log('Пароль должен быть не более 20 символов')
+            return
+        }
+        if (!/[A-Z]/.test(password)) {
+            console.log('Пароль должен содержать хотя бы одну заглавную букву')
+            return
+        }
+        if (!/[a-z]/.test(password)) {
+            console.log('Пароль должен содержать хотя бы одну строчную букву')
+            return
+        }
+        if (!/[0-9]/.test(password)) {
+            console.log('Пароль должен содержать хотя бы одну цифру')
+            return
+        }
+        if (!/[!@#$%^&*]/.test(password)) {
+            console.log('Пароль должен содержать хотя бы один специальный символ (!@#$%^&*)')
+            return
+        }
+
+        if (login.includes(' ') || password.includes(' ')) {
+            console.log('Логин и пароль не должны содержать пробелов')
+            return
+        }
+        if (login.includes('"') || password.includes('"')) {
+            console.log('Логин и пароль не должны содержать кавычек')
+            return
+        }
+        if (!/^[A-Za-z0-9_]+$/.test(login)) {
+            console.log('Логин может содержать только латиницу, цифры и _')
+            return
+        }
         if (password !== repeatPassword) {
             console.log('Пароли не совпадают')
             return
@@ -75,13 +115,13 @@ export default function Registration() {
             if (response.ok) {
 
                 console.log('Регистрация успешна')
-
+                setIsAuth(true)
                 setMode('login')
-
-                setLogin('')
-                setPassword('')
-                setRepeatPassword('')
             }
+
+            setLogin('')
+            setPassword('')
+            setRepeatPassword('')
 
         } catch (error) {
 
@@ -96,7 +136,6 @@ export default function Registration() {
             <h2 className="Registration-heading">
                 AIONIQ
             </h2>
-
             <section className="Registration-content">
 
                 <input
@@ -180,9 +219,10 @@ export default function Registration() {
                             </button>
                         </>
                     )}
-
                 </section>
-
+                <p className="Placeholder-simvol">
+                    Допустимые символы: латиница, цифры и _
+                </p>
             </section>
 
         </section>
