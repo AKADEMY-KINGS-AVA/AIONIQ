@@ -141,7 +141,7 @@ export default function Registration({ setIsAuth }) {
                 <input
                     className="Username-input"
                     type="text"
-                    placeholder="Username"
+                    placeholder="Логин"
 
                     value={login}
 
@@ -153,7 +153,7 @@ export default function Registration({ setIsAuth }) {
                 <input
                     className="Password-input"
                     type="password"
-                    placeholder="Password"
+                    placeholder="Пароль"
 
                     value={password}
 
