@@ -65,32 +65,32 @@ body {
 
 /* ---------- ТЕКСТ СПРАВА ---------- */
 
-.thank-you-message-1 {
+.bottom-details {
     position: absolute;
 
-    right: 30px;
-    bottom: 30px;
+    right: 100px;
+    bottom: 150px;
 
+    height: 70px;
+    padding: 0 35px;
+
+    border: 3px solid white;
+    border-radius: 100px;
+
+    background: transparent;
     color: white;
-    font-size: 100px;
 
+    font-size: 30px;
+    font-family: "Montserrat", sans-serif;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
     z-index: 20;
 
     animation: textRight 1.2s ease-out forwards;
-}
-
-.thank-you-message-2 {
-    position: absolute;
-
-    right: 38px;
-    bottom: -30px;
-
-    color: white;
-    font-size: 73px;
-
-    z-index: 20;
-
-    animation: textRight 1.4s ease-out forwards;
 }
 
 /* ---------- АНИМАЦИИ ТЕКСТА ---------- */

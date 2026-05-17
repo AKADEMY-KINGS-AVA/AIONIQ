@@ -19,8 +19,9 @@ export default function App() {
           <h2 className="welcome-message-1">Мы рады </h2>
           <h2 className="welcome-message-2" >приветствовать</h2>
           <h2 className="welcome-message-3" >вас!</h2>
-          <h2 className="thank-you-message-1">Спасибо</h2>
-          <h2 className="thank-you-message-2">что выбрали на нас!</h2>
+          <button className="bottom-details">
+            О нашей платформе
+          </button>
           <img className="logo asset_1" src={asset_1} alt="" />
           <img className="logo asset_2" src={asset_2} alt="" />
           <img className="logo asset_3" src={asset_3} alt="" />
